@@ -11,12 +11,27 @@ var expect = require('expect.js'),
 describe('BodyClassName (in a browser)', function () {
   global.beforeEach(function () {
     BodyClassName.canUseDOM = true;
+    global.document.body.className = '';
   });
 
   it('changes the document body class name on mount', function () {
     var className = 'hello world';
     var Component = enzyme.mount(React.createElement(BodyClassName, {className: className}));
     expect(global.document.body.className).to.equal(className);
+  });
+
+  it('does not erase existing body class names', function () {
+    global.document.body.className = 'testing'
+    var className = 'hello world';
+    var Component = enzyme.mount(React.createElement(BodyClassName, { className: className }));
+    expect(global.document.body.className).to.equal('testing hello world');
+  });
+
+  it('does not erase and or duplicate existing body class names', function () {
+    global.document.body.className = 'testing hello'
+    var className = 'hello world';
+    var Component = enzyme.mount(React.createElement(BodyClassName, { className: className }));
+    expect(global.document.body.className).to.equal('testing hello world');
   });
 
   it('supports nesting, gathering all classNames used', function (done) {
