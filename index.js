@@ -5,7 +5,7 @@ var withSideEffect = require('react-side-effect');
 var PropTypes = require('prop-types');
 
 function splitClassName(className) {
-  return className.split(/\s+/)
+  return className.split(/\s+/);
 }
 
 function reducePropsToState(propsList) {
@@ -19,7 +19,7 @@ function reducePropsToState(propsList) {
 function handleStateChangeOnClient(stringClassNames) {
   var currentClassNames = splitClassName(document.body.className).filter(
     function (className) {
-      return BodyClassName.cache.indexOf(className) === -1
+      return BodyClassName.cache.indexOf(className) === -1;
     });
 
   var newClassNames = splitClassName(stringClassNames);
