@@ -9,7 +9,7 @@ function splitClassName(className) {
 }
 
 function reducePropsToState(propsList) {
-  return propsList.map(function (props) {
+  return propsList.map(function(props) {
     return props.className;
   }).filter(function (value, index, self) {
     return self.indexOf(value) === index;
