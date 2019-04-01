@@ -4,8 +4,12 @@ var React = require('react');
 var withSideEffect = require('react-side-effect');
 var PropTypes = require('prop-types');
 
+function splitClassName(className) {
+  return className.split(/\s+/)
+}
+
 function reducePropsToState(propsList) {
-  return propsList.map(function(props) {
+  return propsList.map(function (props) {
     return props.className;
   }).filter(function (value, index, self) {
     return self.indexOf(value) === index;
@@ -13,7 +17,15 @@ function reducePropsToState(propsList) {
 }
 
 function handleStateChangeOnClient(stringClassNames) {
-  document.body.className = stringClassNames || '';
+  var currentClassNames = splitClassName(document.body.className).filter(
+    function (className) {
+      return BodyClassName.cache.indexOf(className) === -1
+    });
+
+  var newClassNames = splitClassName(stringClassNames);
+
+  BodyClassName.cache = newClassNames;
+  document.body.className = currentClassNames.concat(newClassNames).join(' ').trim();
 }
 
 function BodyClassName(props){
@@ -25,6 +37,7 @@ function BodyClassName(props){
 }
 
 BodyClassName.displayName = 'BodyClassName';
+BodyClassName.cache = [];
 BodyClassName.propTypes = {
   className: PropTypes.string.isRequired
 };

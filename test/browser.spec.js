@@ -2,21 +2,29 @@
 /*global global, describe, it, afterEach, before, after */
 'use strict';
 var expect = require('expect.js'),
-    enzyme = require('enzyme'),
-    React = require('react'),
-    ReactDOM = require('react-dom'),
-    BodyClassName = require('../'),
-    jsdom = require('jsdom').jsdom;
+  enzyme = require('enzyme'),
+  React = require('react'),
+  ReactDOM = require('react-dom'),
+  BodyClassName = require('../'),
+  jsdom = require('jsdom').jsdom;
 
 describe('BodyClassName (in a browser)', function () {
   global.beforeEach(function () {
     BodyClassName.canUseDOM = true;
+    global.document.body.className = ''
   });
 
   it('changes the document body class name on mount', function () {
     var className = 'hello world';
     var Component = enzyme.mount(React.createElement(BodyClassName, {className: className}));
     expect(global.document.body.className).to.equal(className);
+  });
+
+  it('does not erase existing body class names', function () {
+    global.document.body.className = 'testing'
+    var className = 'hello world';
+    var Component = enzyme.mount(React.createElement(BodyClassName, { className: className }));
+    expect(global.document.body.className).to.equal('testing hello world');
   });
 
   it('supports nesting, gathering all classNames used', function (done) {
