@@ -1,6 +1,6 @@
 {
   "name": "react-body-classname",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A declarative, nested way to manipulate your body's className",
   "main": "index.js",
   "scripts": {
