@@ -1,4 +1,4 @@
-# react-body-classname
+# react-html-body-classname
 
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][npm-url]
