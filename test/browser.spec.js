@@ -11,14 +11,14 @@ describe('HtmlClassName (in a browser)', () => {
 
   it('changes the document html class name on mount', () => {
     var className = 'hello world'
-    render(React.createElement(HtmlClassName, { className: className }))
+    render(<HtmlClassName className={className} id='testId' />)
     expect(global.document.documentElement.className).toEqual(className)
   })
 
   it('does not erase existing html class names', () => {
     global.document.documentElement.className = 'testing'
     var className = 'hello world'
-    render(React.createElement(HtmlClassName, { className: className }))
+    render(<HtmlClassName className={className} id='testId' />)
     expect(global.document.documentElement.className).toEqual(
       'testing hello world'
     )
@@ -27,7 +27,7 @@ describe('HtmlClassName (in a browser)', () => {
   it('does not erase and or duplicate existing html class names', () => {
     global.document.documentElement.className = 'testing hello'
     var className = 'hello world'
-    render(React.createElement(HtmlClassName, { className: className }))
+    render(<HtmlClassName className={className} id='testId' />)
     expect(global.document.documentElement.className).toEqual(
       'testing hello world'
     )
@@ -38,12 +38,14 @@ describe('HtmlClassName (in a browser)', () => {
     var firstName = 'hello world'
     var secondName = 'foo bar'
 
-    const Component1 = () => <HtmlClassName className={firstName} />
+    const Component1 = () => (
+      <HtmlClassName className={firstName} id='testId1' />
+    )
     const Component2 = () => {
       called()
 
       return (
-        <HtmlClassName className={secondName}>
+        <HtmlClassName className={secondName} id='testId2'>
           <div>
             <Component1 />
           </div>
@@ -70,21 +72,21 @@ describe('BodyClassName (in a browser)', () => {
 
   it('changes the document body class name on mount', () => {
     var className = 'hello world'
-    render(<BodyClassName className={className} />)
+    render(<BodyClassName className={className} id='testId' />)
     expect(global.document.body.className).toEqual(className)
   })
 
   it('does not erase existing body class names', () => {
     global.document.body.className = 'testing'
     var className = 'hello world'
-    render(<BodyClassName className={className} />)
+    render(<BodyClassName className={className} id='testId' />)
     expect(global.document.body.className).toEqual('testing hello world')
   })
 
   it('does not erase and or duplicate existing body class names', () => {
     global.document.body.className = 'testing hello'
     var className = 'hello world'
-    render(<BodyClassName className={className} />)
+    render(<BodyClassName className={className} id='testId' />)
     expect(global.document.body.className).toEqual('testing hello world')
   })
 
@@ -93,12 +95,14 @@ describe('BodyClassName (in a browser)', () => {
     var firstName = 'hello world'
     var secondName = 'foo bar'
 
-    const Component1 = () => <BodyClassName className={firstName} />
+    const Component1 = () => (
+      <BodyClassName className={firstName} id='testId1' />
+    )
     const Component2 = () => {
       called()
 
       return (
-        <BodyClassName className={secondName}>
+        <BodyClassName className={secondName} id='testId2'>
           <div>
             <Component1 />
           </div>

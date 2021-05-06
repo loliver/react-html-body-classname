@@ -11,7 +11,7 @@ describe('HtmlClassName', () => {
 
   it('hides itself from the DOM', () => {
     var { container } = render(
-      <HtmlClassName className='irrelevant'>
+      <HtmlClassName className='irrelevant' id='testId'>
         <div>hello</div>
       </HtmlClassName>
     )
@@ -20,7 +20,7 @@ describe('HtmlClassName', () => {
 
   it('throws an error if it has multiple children', () => {
     var Component = () => (
-      <HtmlClassName className='irrelevant'>
+      <HtmlClassName className='irrelevant' id='testId'>
         <div>hello</div>
         <div>world</div>
       </HtmlClassName>
@@ -45,7 +45,7 @@ describe('HtmlClassName', () => {
 
     var Component2 = () => {
       return (
-        <HtmlClassName className='irrelevant'>
+        <HtmlClassName className='irrelevant' id='testId'>
           <div>
             <div>a</div>
             <div>b</div>
@@ -73,7 +73,7 @@ describe('BodyClassName', () => {
 
   it('hides itself from the DOM', () => {
     var { container } = render(
-      <BodyClassName className='irrelevant'>
+      <BodyClassName className='irrelevant' id='testId'>
         <div>hello</div>
       </BodyClassName>
     )
@@ -82,7 +82,7 @@ describe('BodyClassName', () => {
 
   it('throws an error if it has multiple children', () => {
     var Component = () => (
-      <BodyClassName className='irrelevant'>
+      <BodyClassName className='irrelevant' id='testId'>
         <div>hello</div>
         <div>world</div>
       </BodyClassName>
@@ -104,7 +104,7 @@ describe('BodyClassName', () => {
     )
 
     var Component2 = () => (
-      <BodyClassName className='irrelevant'>
+      <BodyClassName className='irrelevant' id='testId'>
         <div>
           <div>a</div>
           <div>b</div>

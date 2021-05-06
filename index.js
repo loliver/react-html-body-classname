@@ -7,26 +7,74 @@ function splitClassName (className) {
   return className.split(/\s+/)
 }
 
-function handleHtmlStateChangeOnClient (stringClassNames) {
-  var currentHtmlClassNames = splitClassName(document.documentElement.className)
+function buildClassObject (className, uniqueInstanceId) {
+  return { className: className, uniqueInstanceId: uniqueInstanceId }
+}
 
-  var newHtmlClassNames = splitClassName(stringClassNames).filter(function (
-    className
+function handleStateChangeOnClient (
+  stringClassNames,
+  uniqueInstanceId,
+  Component
+) {
+  var oldClassNamesForUniqueId = Component.cache.filter(function (
+    classNameObj
   ) {
-    return currentHtmlClassNames.indexOf(className) === -1
+    return classNameObj && classNameObj.uniqueInstanceId === uniqueInstanceId
+  })
+  var currentClassNames = splitClassName(
+    document[Component.classNameTarget].className
+  ).filter(function (currentClassName) {
+    if (oldClassNamesForUniqueId.length > 0) {
+      var classNameForUniqueIdDoesNotExist = true
+      oldClassNamesForUniqueId.forEach(function (oldClassNameForUniqueId) {
+        if (oldClassNameForUniqueId.className === currentClassName) {
+          classNameForUniqueIdDoesNotExist = false
+        }
+      })
+      return classNameForUniqueIdDoesNotExist
+    } else {
+      return true
+    }
   })
 
-  HtmlClassName.cache = newHtmlClassNames
-  document.getElementsByTagName('html')[0].className = currentHtmlClassNames
-    .concat(newHtmlClassNames)
+  var newClassNames = splitClassName(stringClassNames).filter(function (
+    className
+  ) {
+    return Component.cache.indexOf(className) === -1
+  })
+
+  var currentClassNameObjects = currentClassNames.map(function (
+    currentClassName
+  ) {
+    var cachedClassNameByCurrentClassName = Component.cache.find(function (
+      classNameObj
+    ) {
+      return classNameObj && classNameObj.className === currentClassName
+    })
+
+    return cachedClassNameByCurrentClassName
+      ? buildClassObject(
+          currentClassName,
+          cachedClassNameByCurrentClassName.uniqueInstanceId
+        )
+      : undefined
+  })
+
+  var newClassNameObjects = newClassNames.map(function (newClassName) {
+    return buildClassObject(newClassName, uniqueInstanceId)
+  })
+
+  Component.cache = currentClassNameObjects.concat(newClassNameObjects)
+  document[Component.classNameTarget].className = currentClassNames
+    .concat(newClassNames)
     .join(' ')
     .trim()
 }
 
 function HtmlClassName (props) {
   React.useEffect(
-    function setHtmlClassName() {
-      props.className && handleHtmlStateChangeOnClient(props.className)
+    function setHtmlClassNameState () {
+      handleStateChangeOnClient(props.className, props.id, HtmlClassName)
     },
     [props.className]
   )
@@ -40,29 +88,15 @@ function HtmlClassName (props) {
 HtmlClassName.displayName = 'HtmlClassName'
 HtmlClassName.cache = []
 HtmlClassName.propTypes = {
-  className: PropTypes.string.isRequired
+  className: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired
 }
-
-function handleBodyStateChangeOnClient (stringClassNames) {
-  var currentBodyClassNames = splitClassName(document.body.className)
-
-  var newBodyClassNames = splitClassName(stringClassNames).filter(function (
-    className
-  ) {
-    return currentBodyClassNames.indexOf(className) === -1
-  })
-
-  BodyClassName.cache = newBodyClassNames
-  document.body.className = currentBodyClassNames
-    .concat(newBodyClassNames)
-    .join(' ')
-    .trim()
-}
+HtmlClassName.classNameTarget = 'documentElement'
 
 function BodyClassName (props) {
   React.useEffect(
-    function setBodyClassName() {
-      props.className && handleBodyStateChangeOnClient(props.className)
+    function setBodyClassNameState () {
+      handleStateChangeOnClient(props.className, props.id, BodyClassName)
     },
     [props.className]
   )
@@ -76,8 +110,10 @@ function BodyClassName (props) {
 BodyClassName.displayName = 'BodyClassName'
 BodyClassName.cache = []
 BodyClassName.propTypes = {
-  className: PropTypes.string.isRequired
+  className: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired
 }
+BodyClassName.classNameTarget = 'body'
 
 module.exports = {
   HtmlClassName,
