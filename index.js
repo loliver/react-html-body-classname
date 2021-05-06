@@ -17,7 +17,7 @@ function handleHtmlStateChangeOnClient (stringClassNames) {
   })
 
   HtmlClassName.cache = newHtmlClassNames
-  document.documentElement.className = currentHtmlClassNames
+  document.getElementsByTagName('html')[0].className = currentHtmlClassNames
     .concat(newHtmlClassNames)
     .join(' ')
     .trim()
