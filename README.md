@@ -4,7 +4,7 @@
 [![Downloads][downloads-image]][npm-url]
 [![Dependency status][david-dm-image]][david-dm-url]
 
-Provides a declarative way to specify `document.documentElement.className` and `document.body.className` in your react app. Supports server-side usage too.
+Provides a declarative way to specify `document.documentElement.className` and `document.body.className` in your react app.
 
 ---
 
