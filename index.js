@@ -4,7 +4,7 @@ var React = require('react')
 var PropTypes = require('prop-types')
 
 function splitClassName (className) {
-  return className.split(/\s+/)
+  return className && className.split(/\s+/)
 }
 
 function handleHtmlStateChangeOnClient (stringClassNames) {
