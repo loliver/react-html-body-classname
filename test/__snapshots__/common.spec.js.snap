@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BodyClassName hides itself from the DOM 1`] = `
+<div>
+  <div>
+    hello
+  </div>
+</div>
+`;
+
+exports[`BodyClassName works with complex children 1`] = `
+<div>
+  <div>
+    <div>
+      a
+    </div>
+    <div>
+      b
+    </div>
+    <div>
+      <p>
+        <span>
+          c
+        </span>
+        <span>
+          d
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`HtmlClassName hides itself from the DOM 1`] = `
+<div>
+  <div>
+    hello
+  </div>
+</div>
+`;
+
+exports[`HtmlClassName works with complex children 1`] = `
+<div>
+  <div>
+    <div>
+      a
+    </div>
+    <div>
+      b
+    </div>
+    <div>
+      <p>
+        <span>
+          c
+        </span>
+        <span>
+          d
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;

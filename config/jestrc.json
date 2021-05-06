@@ -1,0 +1,38 @@
+{
+  "collectCoverage": true,
+  "globals": {
+    "ENV": "DEV"
+  },
+  "rootDir": "../",
+  "testPathIgnorePatterns": ["/node_modules/", "/tmp/", "/config"],
+  "collectCoverageFrom": ["**/*.js"],
+  "cacheDirectory": "./tmp/",
+  "coveragePathIgnorePatterns": [
+    ".spec.*",
+    "<rootDir>/node_modules/",
+    "<rootDir>/reports/",
+    "<rootDir>/config/"
+  ],
+  "transform": {
+    "^.+\\.js?$": "<rootDir>/config/jest.transform.js"
+  },
+  "transformIgnorePatterns": ["/node_modules/(?!@(anz|oceanblue))"],
+  "setupFiles": ["<rootDir>/config/jest/__mocks__/client.js"],
+  "setupFilesAfterEnv": ["<rootDir>/config/jest/jest.setup.js"],
+  "coverageDirectory": "<rootDir>/reports/coverage",
+  "testResultsProcessor": "jest-sonar-reporter",
+  "reporters": [
+    "default",
+    [
+      "jest-junit",
+      {
+        "suiteName": "Unit Tests",
+        "outputDirectory": "<rootDir>/reports/unit/"
+      }
+    ]
+  ],
+  "moduleNameMapper": {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga|ico)$": "<rootDir>/config/jest/__mocks__/fileMock.js",
+    "\\.(css|scss)$": "<rootDir>/config/jest/__mocks__/cssMock.js"
+  }
+}

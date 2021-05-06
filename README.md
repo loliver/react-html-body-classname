@@ -1,65 +1,84 @@
-# react-body-classname
+# react-html-body-classname
 
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][npm-url]
 [![Dependency status][david-dm-image]][david-dm-url]
 
-
-Provides a declarative way to specify `document.body.className` in your react app. Supports server-side usage too.
-
-Built with [React Side Effect](https://github.com/gaearon/react-side-effect).
+Provides a declarative way to specify `document.documentElement.className` and `document.body.className` in your react app. Supports server-side usage too.
 
 ---
 
 ## Install
 
 ```
-yarn add react-body-classname
+npm i --save reacthtml-html-body-classname
 ```
 
-Dependencies: React >= 0.13.0
+Dependencies: React ^17.0.2 & ReactDOM ^17.0.2
 
 ## What it looks like
 
 ```jsx
-import BodyClassName from 'react-body-classname';
+import { HtmlClassName, BodyClassName } from 'react-html-body-classname'
 
-const Basic = () => (
-  <BodyClassName className="helloworld">
+const BasicBody = () => (
+  <BodyClassName className='helloworld'>
     <h1>You ate a whole wheel of cheese?</h1>
   </BodyClassName>
-);
+)
 // -> document.body.className === "helloworld"
 
-const Nested = () => (
-  <BodyClassName className="outside">
+const BasicHtml = () => (
+  <HtmlClassName className='helloworld'>
+    <h1>You ate a whole wheel of cheese?</h1>
+  </HtmlClassName>
+)
+// -> document.documentElement.className === "helloworld"
+
+const NestedBody = () => (
+  <BodyClassName className='outside'>
     <div>
-      <BodyClassName className="inside">
+      <BodyClassName className='inside'>
         <p>I‘m not even mad</p>
       </BodyClassName>
     </div>
   </BodyClassName>
-);
+)
 // -> document.body.className === "outside inside"
 
-const GoCrazy = () => (
-  <BodyClassName className={Array(8).join(''/0) + ' batman!'}>
+const NestedHtml = () => (
+  <HtmlClassName className='outside'>
+    <div>
+      <HtmlClassName className='inside'>
+        <p>I‘m not even mad</p>
+      </HtmlClassName>
+    </div>
+  </HtmlClassName>
+)
+// -> document.documentElement.className === "outside inside"
+
+const GoCrazyBody = () => (
+  <BodyClassName className={Array(8).join('' / 0) + ' batman!'}>
     <h1>I'm impressed</h1>
   </BodyClassName>
-);
+)
 // -> document.body.className === "NaNNaNNaNNaNNaNNaNNaN batman!"
+
+const GoCrazyHtml = () => (
+  <HtmlClassName className={Array(8).join('' / 0) + ' batman!'}>
+    <BodyClassName className='body classes'>
+      <h1>I'm impressed</h1>
+    </BodyClassName>
+  </HtmlClassName>
+)
+// -> document.documentElement.className === "NaNNaNNaNNaNNaNNaNNaN batman!"
+// -> document.body.className === "body classes"
 ```
 
 **Note**: Only supports a single child as props.
 
-## Server Usage
-
-When using server-side, use `BodyClassName.rewind()` _after rendering components to string_ to retrieve the combined class name. Then chuck that into your HTML template.
-
-**Important**: This component keeps track of mounted instances, so if you don't call `BodyClassName.rewind()` you'll get a memory leak.
-
-[npm-url]: https://npmjs.org/package/react-body-classname
-[downloads-image]: http://img.shields.io/npm/dm/react-body-classname.svg
-[npm-image]: http://img.shields.io/npm/v/react-body-classname.svg
-[david-dm-url]:https://david-dm.org/iest/react-body-classname
-[david-dm-image]:https://david-dm.org/iest/react-body-classname.svg
+[npm-url]: https://npmjs.org/package/react-html-body-classname
+[downloads-image]: http://img.shields.io/npm/dm/react-html-body-classname.svg
+[npm-image]: http://img.shields.io/npm/v/react-html-body-classname.svg
+[david-dm-url]: https://david-dm.org/loliver/react-html-body-classname
+[david-dm-image]: https://david-dm.org/loliver/react-html-body-classname.svg

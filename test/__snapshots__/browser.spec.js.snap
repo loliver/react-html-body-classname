@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BodyClassName (in a browser) supports nesting, gathering all classNames used 1`] = `
+<body
+  class="hello world foo bar"
+>
+  <div>
+    <div />
+  </div>
+</body>
+`;
+
+exports[`HtmlClassName (in a browser) supports nesting, gathering all classNames used 1`] = `
+<body>
+  <div>
+    <div />
+  </div>
+</body>
+`;

@@ -1,48 +1,85 @@
-'use strict';
+'use strict'
 
-var React = require('react');
-var withSideEffect = require('react-side-effect');
-var PropTypes = require('prop-types');
+var React = require('react')
+var PropTypes = require('prop-types')
 
-function splitClassName(className) {
-  return className.split(/\s+/);
+function splitClassName (className) {
+  return className.split(/\s+/)
 }
 
-function reducePropsToState(propsList) {
-  return propsList.map(function(props) {
-    return props.className;
-  }).filter(function (value, index, self) {
-    return self.indexOf(value) === index;
-  }).join(' ');
+function handleHtmlStateChangeOnClient (stringClassNames) {
+  var currentHtmlClassNames = splitClassName(document.documentElement.className)
+
+  var newHtmlClassNames = splitClassName(stringClassNames).filter(function (
+    className
+  ) {
+    return currentHtmlClassNames.indexOf(className) === -1
+  })
+
+  HtmlClassName.cache = newHtmlClassNames
+  document.documentElement.className = currentHtmlClassNames
+    .concat(newHtmlClassNames)
+    .join(' ')
+    .trim()
 }
 
-function handleStateChangeOnClient(stringClassNames) {
-  var currentClassNames = splitClassName(document.body.className).filter(
-    function (className) {
-      return BodyClassName.cache.indexOf(className) === -1;
-    });
-
-  var newClassNames = splitClassName(stringClassNames);
-
-  BodyClassName.cache = newClassNames;
-  document.body.className = currentClassNames.concat(newClassNames).join(' ').trim();
-}
-
-function BodyClassName(props){
+function HtmlClassName (props) {
+  React.useEffect(
+    function setHtmlClassName() {
+      props.className && handleHtmlStateChangeOnClient(props.className)
+    },
+    [props.className]
+  )
   if (props.children) {
-    return React.Children.only(props.children);
+    return React.Children.only(props.children)
   } else {
-    return null;
+    return null
   }
 }
 
-BodyClassName.displayName = 'BodyClassName';
-BodyClassName.cache = [];
+HtmlClassName.displayName = 'HtmlClassName'
+HtmlClassName.cache = []
+HtmlClassName.propTypes = {
+  className: PropTypes.string.isRequired
+}
+
+function handleBodyStateChangeOnClient (stringClassNames) {
+  var currentBodyClassNames = splitClassName(document.body.className)
+
+  var newBodyClassNames = splitClassName(stringClassNames).filter(function (
+    className
+  ) {
+    return currentBodyClassNames.indexOf(className) === -1
+  })
+
+  BodyClassName.cache = newBodyClassNames
+  document.body.className = currentBodyClassNames
+    .concat(newBodyClassNames)
+    .join(' ')
+    .trim()
+}
+
+function BodyClassName (props) {
+  React.useEffect(
+    function setBodyClassName() {
+      props.className && handleBodyStateChangeOnClient(props.className)
+    },
+    [props.className]
+  )
+  if (props.children) {
+    return React.Children.only(props.children)
+  } else {
+    return null
+  }
+}
+
+BodyClassName.displayName = 'BodyClassName'
+BodyClassName.cache = []
 BodyClassName.propTypes = {
   className: PropTypes.string.isRequired
-};
+}
 
-module.exports = withSideEffect(
-  reducePropsToState,
-  handleStateChangeOnClient
-)(BodyClassName);
+module.exports = {
+  HtmlClassName,
+  BodyClassName
+}
