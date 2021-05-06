@@ -1,6 +1,6 @@
 {
   "name": "react-html-body-classname",
-  "version": "0.0.1-beta.0",
+  "version": "0.0.1-beta.2",
   "description": "A declarative, nested way to manipulate your html and body's className",
   "main": "index",
   "typings": "index",

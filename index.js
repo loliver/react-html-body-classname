@@ -4,7 +4,7 @@ var React = require('react')
 var PropTypes = require('prop-types')
 
 function splitClassName (className) {
-  return className && className.split(/\s+/)
+  return className.split(/\s+/)
 }
 
 function handleHtmlStateChangeOnClient (stringClassNames) {
@@ -26,7 +26,7 @@ function handleHtmlStateChangeOnClient (stringClassNames) {
 function HtmlClassName (props) {
   React.useEffect(
     function setHtmlClassName() {
-      handleHtmlStateChangeOnClient(props.className)
+      props.className && handleHtmlStateChangeOnClient(props.className)
     },
     [props.className]
   )
@@ -62,7 +62,7 @@ function handleBodyStateChangeOnClient (stringClassNames) {
 function BodyClassName (props) {
   React.useEffect(
     function setBodyClassName() {
-      handleBodyStateChangeOnClient(props.className)
+      props.className && handleBodyStateChangeOnClient(props.className)
     },
     [props.className]
   )
