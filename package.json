@@ -1,16 +1,17 @@
 {
-  "name": "react-body-classname",
-  "version": "1.3.1",
-  "description": "A declarative, nested way to manipulate your body's className",
-  "main": "index.js",
+  "name": "react-html-body-classname",
+  "version": "0.0.1-beta.0",
+  "description": "A declarative, nested way to manipulate your html and body's className",
+  "main": "index",
+  "typings": "index",
   "scripts": {
-    "test": "mocha test/setup.js test/*.spec.js",
+    "test": "jest --config ./config/jestrc.json",
     "test:watch": "npm run test -- --watch",
-    "lint": "jshint index.js test"
+    "lint": "prettier-standard --lint --fix"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iest/react-body-classname"
+    "url": "https://github.com/loliver/react-html-body-classname"
   },
   "keywords": [
     "react",
@@ -20,25 +21,41 @@
     "title",
     "jsx"
   ],
-  "author": "Iestyn Williams <iest@me.com> (http://github.com/iest)",
+  "author": "Oliver Gassman <oliver.gassman@gmail.com> (http://github.com/loliver)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iest/react-body-classname/issues"
+    "url": "https://github.com/loliver/react-html-body-classname/issues"
   },
-  "homepage": "https://github.com/iest/react-body-classname",
+  "homepage": "https://github.com/loliver/react-html-body-classname",
   "devDependencies": {
-    "enzyme": "^2.8.0",
-    "expect.js": "^0.3.1",
-    "global": "^4.3.0",
-    "jsdom": "^9.12.0",
-    "jshint": "^2.5.6",
-    "mocha": "^3.2.0",
-    "react": "^15.5.3",
-    "react-addons-test-utils": "^15.5.1",
-    "react-dom": "^15.5.3"
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.13.15",
+    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
+    "@babel/plugin-transform-regenerator": "^7.13.15",
+    "@babel/preset-env": "^7.14.1",
+    "@babel/preset-react": "^7.13.13",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6",
+    "babel-jest": "^26.6.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "eslint": "^7.25.0",
+    "global": "^4.4.0",
+    "jest": "^26.6.3",
+    "jest-axe": "^4.1.0",
+    "jest-junit": "^12.0.0",
+    "jest-mock-now": "^1.3.0",
+    "jest-sonar-reporter": "^2.0.0",
+    "jsdom": "^16.5.3",
+    "prettier-standard": "^16.4.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "typescript": "^4.2.4"
   },
   "dependencies": {
-    "prop-types": "^15.5.6",
-    "react-side-effect": "^1.1.0 || ^2.1.0"
+    "prop-types": "^15.7.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

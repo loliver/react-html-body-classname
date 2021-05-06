@@ -1,117 +1,125 @@
-/*jshint newcap: false */
-/*global describe, it, before */
-'use strict';
-var expect = require('expect.js'),
-    enzyme = require('enzyme'),
-    React = require('react'),
-    ReactDOM = require('react-dom'),
-    BodyClassName = require('../'),
-    jsdom = require('jsdom').jsdom;
+import React from 'react'
+import { render } from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
 
-describe('BodyClassName', function () {
-  global.beforeEach(function () {
-    BodyClassName.canUseDOM = false;
-  });
+import { HtmlClassName, BodyClassName } from '../'
 
-  it('has a displayName', function () {
-    var el = enzyme.mount(React.createElement(BodyClassName, {className: 'hello'}));
-    var name = el.name();
-    expect(name).to.be.a('string');
-    expect(name).not.to.be.empty();
-  });
+describe('HtmlClassName', () => {
+  global.beforeEach(() => {
+    HtmlClassName.canUseDOM = false
+  })
 
-  it('hides itself from the DOM', function () {
-    var Component = enzyme.mount(
-      React.createElement(BodyClassName, {className: 'irrelevant'},
-        React.createElement('div', null, 'hello')
-      )
-    );
-    expect(Component.html()).to.equal('<div>hello</div>');
-  });
+  it('hides itself from the DOM', () => {
+    var { container } = render(
+      <HtmlClassName className='irrelevant'>
+        <div>hello</div>
+      </HtmlClassName>
+    )
+    expect(container).toMatchSnapshot()
+  })
 
-  it('throws an error if it has multiple children', function (done) {
-    var Component = function() {
+  it('throws an error if it has multiple children', () => {
+    var Component = () => (
+      <HtmlClassName className='irrelevant'>
+        <div>hello</div>
+        <div>world</div>
+      </HtmlClassName>
+    )
+
+    expect(() => {
+      render(<Component />)
+    }).toThrow(
+      /React.Children.only expected to receive a single React element child/
+    )
+  })
+
+  it('works with complex children', () => {
+    var Component1 = () => {
       return (
-        React.createElement(BodyClassName, {className: 'irrelevant'},
-          React.createElement('div', null, 'hello'),
-          React.createElement('div', null, 'world')
-        )
-      );
-    };
-
-    expect(function () {
-      var el = enzyme.mount(React.createElement(Component));
-    }).to.throwException(function (e) {
-      expect(e.message).to.match(/^React.Children.only expected to receive a single React element child/);
-      done();
-    });
-  });
-
-  it('works with complex children', function () {
-    var Component1 = function(){
-      return React.createElement('p', null,
-        React.createElement('span', null, 'c'),
-        React.createElement('span', null, 'd')
-      );
-    };
-
-    var Component2 = function() {
-        return React.createElement(BodyClassName, {className: 'irrelevant'},
-          React.createElement('div', null,
-            React.createElement('div', null, 'a'),
-            React.createElement('div', null, 'b'),
-            React.createElement('div', null, React.createElement(Component1))
-          )
-        );
-    };
-
-    var component = enzyme.mount(React.createElement(Component2));
-    var markup = component.html();
-    expect(markup).to.equal(
-      '<div>' +
-        '<div>a</div>' +
-        '<div>b</div>' +
-        '<div>' +
-          '<p>' +
-            '<span>c</span>' +
-            '<span>d</span>' +
-          '</p>' +
-        '</div>' +
-      '</div>'
-    );
-  });
-});
-
-describe('BodyClassName.rewind', function () {
-  it('clears the mounted instances', function () {
-    BodyClassName.rewind();
-    enzyme.mount(
-      React.createElement(BodyClassName, {className: 'a'},
-        React.createElement(BodyClassName, {className: 'b'},
-          React.createElement(BodyClassName, {className: 'c'}))
+        <p>
+          <span>c</span>
+          <span>d</span>
+        </p>
       )
-    );
-    expect(BodyClassName.peek()).to.equal('a b c');
-    BodyClassName.rewind();
-    expect(BodyClassName.peek()).to.equal(undefined);
-  });
-  it('returns all the classNames used', function () {
-    enzyme.mount(
-      React.createElement(BodyClassName, {className: 'one'},
-        React.createElement(BodyClassName, {className: 'two'},
-          React.createElement(BodyClassName, {className: 'three'}))
+    }
+
+    var Component2 = () => {
+      return (
+        <HtmlClassName className='irrelevant'>
+          <div>
+            <div>a</div>
+            <div>b</div>
+            <div>
+              <Component1 />
+            </div>
+          </div>
+        </HtmlClassName>
       )
-    );
-    expect(BodyClassName.rewind()).to.equal('one two three');
-  });
-  it('returns undefined if no mounted instances exist', function () {
-    enzyme.mount(
-      React.createElement(BodyClassName, {className: 'a'},
-        React.createElement(BodyClassName, {className: 'b'},
-          React.createElement(BodyClassName, {className: 'c'}))
-      )
-    );
-    BodyClassName.rewind();
-    expect(BodyClassName.peek()).to.equal(undefined);
-  });
-});
+    }
+
+    var { container, getByText } = render(<Component2 />)
+    expect(container).toMatchSnapshot()
+    expect(getByText('a')).toBeDefined()
+    expect(getByText('b')).toBeDefined()
+    expect(getByText('c')).toBeDefined()
+    expect(getByText('d')).toBeDefined()
+  })
+})
+
+describe('BodyClassName', () => {
+  global.beforeEach(() => {
+    BodyClassName.canUseDOM = false
+  })
+
+  it('hides itself from the DOM', () => {
+    var { container } = render(
+      <BodyClassName className='irrelevant'>
+        <div>hello</div>
+      </BodyClassName>
+    )
+    expect(container).toMatchSnapshot()
+  })
+
+  it('throws an error if it has multiple children', () => {
+    var Component = () => (
+      <BodyClassName className='irrelevant'>
+        <div>hello</div>
+        <div>world</div>
+      </BodyClassName>
+    )
+
+    expect(() => {
+      render(<Component />)
+    }).toThrow(
+      /React.Children.only expected to receive a single React element child/
+    )
+  })
+
+  it('works with complex children', () => {
+    var Component1 = () => (
+      <p>
+        <span>c</span>
+        <span>d</span>
+      </p>
+    )
+
+    var Component2 = () => (
+      <BodyClassName className='irrelevant'>
+        <div>
+          <div>a</div>
+          <div>b</div>
+          <div>
+            <Component1 />
+          </div>
+        </div>
+      </BodyClassName>
+    )
+
+    var { container, getByText } = render(<Component2 />)
+    expect(container).toMatchSnapshot()
+    expect(getByText('a')).toBeDefined()
+    expect(getByText('b')).toBeDefined()
+    expect(getByText('c')).toBeDefined()
+    expect(getByText('d')).toBeDefined()
+  })
+})
