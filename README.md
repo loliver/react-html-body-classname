@@ -11,7 +11,7 @@ Provides a declarative way to specify `document.documentElement.className` and `
 ## Install
 
 ```
-npm i --save reacthtml-html-body-classname
+npm i --save react-html-body-classname
 ```
 
 Dependencies: React ^17.0.2 & ReactDOM ^17.0.2
@@ -57,14 +57,7 @@ const NestedHtml = () => (
 )
 // -> document.documentElement.className === "outside inside"
 
-const GoCrazyBody = () => (
-  <BodyClassName className={Array(8).join('' / 0) + ' batman!'}>
-    <h1>I'm impressed</h1>
-  </BodyClassName>
-)
-// -> document.body.className === "NaNNaNNaNNaNNaNNaNNaN batman!"
-
-const GoCrazyHtml = () => (
+const GoCrazy = () => (
   <HtmlClassName className={Array(8).join('' / 0) + ' batman!'}>
     <BodyClassName className='body classes'>
       <h1>I'm impressed</h1>
