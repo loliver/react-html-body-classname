@@ -1,4 +1,5 @@
 {
+  "testEnvironment": "jsdom",
   "collectCoverage": true,
   "globals": {
     "ENV": "DEV"
@@ -16,8 +17,7 @@
   "transform": {
     "^.+\\.js?$": "<rootDir>/config/jest.transform.js"
   },
-  "transformIgnorePatterns": ["/node_modules/(?!@(anz|oceanblue))"],
-  "setupFiles": ["<rootDir>/config/jest/__mocks__/client.js"],
+  "transformIgnorePatterns": ["/node_modules/"],
   "setupFilesAfterEnv": ["<rootDir>/config/jest/jest.setup.js"],
   "coverageDirectory": "<rootDir>/reports/coverage",
   "testResultsProcessor": "jest-sonar-reporter",

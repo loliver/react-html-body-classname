@@ -4,7 +4,7 @@ const config = {
     [
       '@babel/env',
       {
-        targets: ['last 2 versions', 'ie >= 11']
+        targets: ['last 2 versions']
       }
     ],
     '@babel/react'
