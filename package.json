@@ -1,6 +1,6 @@
 {
   "name": "react-html-body-classname",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "A declarative, nested way to manipulate your html and body's className",
   "main": "index",
   "typings": "index",
@@ -28,34 +28,36 @@
   },
   "homepage": "https://github.com/loliver/react-html-body-classname",
   "devDependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/plugin-proposal-decorators": "^7.13.15",
-    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
-    "@babel/plugin-transform-regenerator": "^7.13.15",
-    "@babel/preset-env": "^7.14.1",
-    "@babel/preset-react": "^7.13.13",
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.6",
-    "babel-jest": "^26.6.3",
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/plugin-proposal-decorators": "^7.17.12",
+    "@babel/plugin-proposal-object-rest-spread": "^7.17.12",
+    "@babel/plugin-transform-regenerator": "^7.17.9",
+    "@babel/preset-env": "^7.17.12",
+    "@babel/preset-react": "^7.17.12",
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.2.0",
+    "babel-jest": "^28.1.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "eslint": "^7.25.0",
+    "eslint": "^8.15.0",
     "global": "^4.4.0",
-    "jest": "^26.6.3",
-    "jest-axe": "^4.1.0",
-    "jest-junit": "^12.0.0",
+    "jest": "^28.1.0",
+    "jest-axe": "^6.0.0",
+    "jest-environment-jsdom": "^28.1.0",
+    "jest-junit": "^13.2.0",
     "jest-mock-now": "^1.3.0",
     "jest-sonar-reporter": "^2.0.0",
-    "jsdom": "^16.5.3",
+    "jsdom": "^19.0.0",
     "prettier-standard": "^16.4.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "typescript": "^4.2.4"
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "typescript": "^4.6.4",
+    "util": "^0.12.4"
   },
   "dependencies": {
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.8.1"
   },
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }
